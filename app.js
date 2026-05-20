@@ -16,6 +16,9 @@ require('dotenv').config();
 
 const app = express();
 
+// Confia em proxies (necessário para o rate-limit funcionar corretamente atrás de Nginx/Load Balancers)
+app.set('trust proxy', 1);
+
 // Configuração Swagger
 const swaggerOptions = {
   definition: {
@@ -86,13 +89,16 @@ app.get('/health', (req, res) => {
 });
 
 // Conexão com MongoDB
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI)
+  .catch(err => {
+    console.error('❌ Erro na conexão inicial do MongoDB:', err);
+  });
+
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, '🍂MongoDB connection error:'));
-db.once('open', () => {
   console.log(' 🍃Conectado ao MongoDB');
-});
+
 
 // Rotas
 app.use('/auth', authRoutes);

@@ -58,7 +58,9 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Middleware de segurança
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false, // Desabilita CSP para permitir que o Swagger UI carregue recursos externos
+}));
 
 // Rate limiting
 const limiter = rateLimit({

@@ -77,6 +77,9 @@ const loginLimiter = rateLimit({
 
 app.use(limiter);
 
+// Aplicar limiter específico para a rota de login antes de carregar as outras rotas
+app.use('/auth/login', loginLimiter);
+
 // Middleware
 app.use(cors());
 app.use(express.json());

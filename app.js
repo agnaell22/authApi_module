@@ -97,8 +97,9 @@ mongoose.connect(process.env.MONGO_URI)
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, '🍂MongoDB connection error:'));
-  console.log(' 🍃Conectado ao MongoDB');
-
+db.once('open', () => {
+  console.log(' 🍃Conectado ao MongoDB com sucesso');
+});
 
 // Rotas
 app.use('/auth', authRoutes);

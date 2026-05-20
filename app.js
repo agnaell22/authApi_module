@@ -1,3 +1,9 @@
+// Polyfill para garantir que a API de Crypto esteja disponível globalmente.
+// Necessário para o driver do MongoDB em algumas versões do Node.js 18+.
+if (!globalThis.crypto) {
+  globalThis.crypto = require('node:crypto');
+}
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -116,5 +122,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-
-

@@ -34,8 +34,12 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: process.env.API_URL || 'http://localhost:5000',
-        description: 'Servidor'
+        url: process.env.API_URL || `http://144.24.36.179:${process.env.PORT || 5000}`,
+        description: 'Servidor de Produção'
+      },
+      {
+        url: 'http://localhost:5000',
+        description: 'Servidor Local'
       }
     ],
     components: {
